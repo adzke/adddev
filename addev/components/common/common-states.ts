@@ -1,5 +1,9 @@
 import { makeVar } from "@apollo/client";
-import { Company } from "./common-types";
+import { AuthorisedUser, Company } from "./common-types";
 
 
 export const rvCompanies = makeVar<Company[]>([])
+
+export const rvAuthorisedUser = makeVar<AuthorisedUser | undefined>(undefined)
+
+

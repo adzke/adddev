@@ -3,8 +3,20 @@
 
 export type Company = {
     id: number;
-    title: string
-    story: string;
-    author: string;
-    publish_date: string
+    company_name: string
 };
+
+export type User = {
+    id: number,
+    username: string,
+    email: string,
+    company_name: string
+}
+
+export type AuthorisationToken = string
+
+export type AuthorisedUser = {
+    user: User,
+    token: AuthorisationToken
+}
+

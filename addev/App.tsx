@@ -1,12 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useReactiveVar } from '@apollo/client';
+import React, {useEffect} from 'react';
+import { StyleSheet } from 'react-native';
+import { getCompanies, getLoginToken, tokenVerifyorRemove, verifyAuthToken } from './components/api_functions/api-functions';
+import { rvAuthorisedUser } from './components/common/common-states';
+import { Dashboard } from './components/dashboard/dashboard';
 
 export default function App() {
+
+  const authorisedUser = useReactiveVar(rvAuthorisedUser)
+
+  useEffect(() => {
+    getLoginToken()
+  }, []);
+
+  useEffect(() => {
+    if(authorisedUser){
+      tokenVerifyorRemove(authorisedUser)
+    }
+  }, [authorisedUser]);
+
+  useEffect(() => {
+    if(authorisedUser){
+      getCompanies(authorisedUser)
+    }
+  }, [authorisedUser]);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Dashboard/>
   );
 }
 
