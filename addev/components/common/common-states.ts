@@ -12,4 +12,7 @@ export const rvCurrentCompany = makeVar<Company | undefined>(undefined)
 
 export const rvAuthorisedUser = makeVar<AuthorisedUser | undefined>(undefined)
 
+export const rvShowHeaderPopover = makeVar<boolean>(false)
+
+
 

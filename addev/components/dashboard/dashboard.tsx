@@ -3,7 +3,6 @@ import React, { useState } from "react"
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from "react-native"
 import { getAuthToken, logOut } from "../api_functions/api-functions"
 import { rvAuthorisedUser, rvCompanies, rvCurrentCompany, rvCurrentCompanyContacts} from "../common/common-states"
-import { AntDesign } from '@expo/vector-icons';
 import { Company } from "../common/common-types"
 
 
@@ -11,21 +10,12 @@ export const Dashboard = () => {
 
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-    const companies = useReactiveVar(rvCompanies)
-    const currentCompany = useReactiveVar(rvCurrentCompany)
     const authorisedUser = useReactiveVar(rvAuthorisedUser)
-    const [dropDownCompanies, setDropDownCompanies] = useState<boolean>(false)
-    const currentContacts = useReactiveVar(rvCurrentCompanyContacts)
+
 
     const clearFields = () => {
         setUsername('')
         setPassword('')
-    }
-
-    const logoutAPI = () => {
-        if (authorisedUser) {
-            logOut(authorisedUser)
-        }
     }
 
 
@@ -35,59 +25,9 @@ export const Dashboard = () => {
 
     }
 
-    const setCurrentCompany = (company: Company) => {
-        rvCurrentCompany(company)
-        setDropDownCompanies(false)
-    }
-
-    const Popover = () => {
-        return (
-            <View style={styles.popover} >
-                <ScrollView >
-                    {companies.map(company => (
-                        <TouchableOpacity style={styles.company} onPress={() => setCurrentCompany(company)}>
-                            <Text style={styles.text}>
-                                {company.company_name}
-                            </Text>
-                        </TouchableOpacity>
-
-                    ))}
-                </ScrollView>
-            </View>
-        )
-    }
-
-
 
     return (
         <View style={styles.container}>
-
-            {dropDownCompanies && <Popover />}
-            <View style={styles.header}>
-                <View style={styles.leftHeader}>
-                    {authorisedUser?.user &&
-                        <View style={styles.rowHeader}>
-                            <TouchableOpacity style={styles.company} onPress={() => setDropDownCompanies(!dropDownCompanies)}>
-                                <Text style={styles.text}>
-                                    {currentCompany?.company_name}
-                                </Text>
-                                <AntDesign name="caretdown" size={15} color="white" style={styles.icon} />
-                            </TouchableOpacity>
-                        </View>
-                    }
-                </View>
-                {authorisedUser?.user &&
-                    <View style={styles.row}>
-                        <Text style={styles.text}>{authorisedUser?.user.username}</Text>
-                        <TouchableOpacity style={styles.submitLogin} onPress={logoutAPI}>
-                            <Text style={styles.text}>
-                                Logout
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                }
-            </View>
-
             <View style={styles.center}>
 
                 {authorisedUser?.user
@@ -100,11 +40,6 @@ export const Dashboard = () => {
                         <View style={styles.businessApp}>
                             <Text style={styles.text}>
                                 CRM
-                            </Text>
-                            <Text>
-                                {currentContacts.map(contact => (
-                                    contact.contact_name
-                                ))}
                             </Text>
                         </View>
                     </View>
@@ -187,16 +122,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         margin: 5,
     },
-    company: {
-        width: 100,
-        height: 35,
-        flexDirection: 'row',
-        backgroundColor: '#FF530D',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 4,
-        margin: 5,
-    },
+
     textCenter: {
     },
     text: {
