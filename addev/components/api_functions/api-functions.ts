@@ -1,15 +1,24 @@
 import { useReactiveVar } from "@apollo/client";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { rvAuthorisedUser, rvCompanies } from "../common/common-states";
-import { AuthorisedUser, Company } from "../common/common-types";
+import { rvAuthorisedUser, rvCompanies, rvContacts, rvCurrentCompany, rvCurrentCompanyContacts } from "../common/common-states";
+import { AuthorisedUser, AuthorisedUserResult, Company, Contact, User } from "../common/common-types";
 
 
 const apiUrl = 'http://127.0.0.1:8000/api/companies/'
 const apiCompanyUrl = 'http://127.0.0.1:8000/api/companies/'
+const apiContactUrl = 'http://127.0.0.1:8000/api/contacts/'
 const loginAPI = 'http://127.0.0.1:8000/api/auth/login'
 const verifyTokenAPI = 'http://127.0.0.1:8000/api/auth/user'
 const logoutAPI = 'http://127.0.0.1:8000/api/auth/logout'
 const storageKey = 'AuthorisedUser'
+
+
+
+export const getData = async (authorisedUser: AuthorisedUser) => {
+    await getCompanies(authorisedUser)
+    await getContacts(authorisedUser)
+}
+
 
 export const getCompanies = async (authorisedUser: AuthorisedUser) => {
     try {
@@ -29,6 +38,7 @@ export const getCompanies = async (authorisedUser: AuthorisedUser) => {
         // 👇️ const result: GetUsersResponse
         const result = (await response.json()) as Company[];
         rvCompanies(result)
+        rvCurrentCompany(result[0])
 
     }
     catch (error) {
@@ -42,6 +52,39 @@ export const getCompanies = async (authorisedUser: AuthorisedUser) => {
     }
 
 }
+
+export const getContacts = async (authorisedUser: AuthorisedUser) => {
+    try {
+        // 👇️ const response: Response
+        const response = await fetch(apiContactUrl, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                Authorization: `Token ${authorisedUser?.token}`
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error! status: ${response.status}`);
+        }
+
+        // 👇️ const result: GetUsersResponse
+        const result = (await response.json()) as Contact[];
+        rvContacts(result)
+
+    }
+    catch (error) {
+        if (error instanceof Error) {
+            console.log('error message: ', error.message);
+            return error.message;
+        } else {
+            console.log('unexpected error: ', error);
+            return 'An unexpected error occurred';
+        }
+    }
+
+}
+
 
 export const getAuthToken = async (username: string, password: string) => {
 
@@ -118,10 +161,15 @@ export const verifyAuthToken = async (authorisedUser: AuthorisedUser) => {
         }
 
         // 👇️ const result: CreateUserResponse
-        const result = (await response.json()) as AuthorisedUser;
+        const result = (await response.json()) as User;
+
+        return  {
+            user: result,
+            errorMessage: null,
+            postSucessful: true
 
 
-        return result
+        }
     }
     catch (error) {
         if (error instanceof Error) {
@@ -220,7 +268,7 @@ export const getLoginToken = async () => {
 export const tokenVerifyorRemove = async (authorisedUser: AuthorisedUser) => {
 
     const result = await verifyAuthToken(authorisedUser)
-    if(result.username === authorisedUser.user.username){
+    if(result.user?.username === authorisedUser.user.username){
         return true
     }
     removeToken()
