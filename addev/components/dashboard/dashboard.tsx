@@ -1,12 +1,12 @@
 import { useReactiveVar } from "@apollo/client"
 import React, { useState } from "react"
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from "react-native"
-import { getAuthToken, logOut } from "../api_functions/api-functions"
-import { rvAuthorisedUser, rvCompanies, rvCurrentCompany, rvCurrentCompanyContacts} from "../common/common-states"
-import { Company } from "../common/common-types"
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native"
+import { getAuthToken } from "../api_functions/api-functions"
+import { rvAuthorisedUser} from "../common/common-states"
+import { StackScreenProps } from '@react-navigation/stack'
 
 
-export const Dashboard = () => {
+export const Dashboard = ({ navigation: { navigate } }: StackScreenProps<ADDevParamList,'Dashboard'>) => {
 
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
@@ -25,11 +25,14 @@ export const Dashboard = () => {
 
     }
 
+    const navigateToCRM = () => {
+        navigate('CRM')
+    }
+
 
     return (
         <View style={styles.container}>
             <View style={styles.center}>
-
                 {authorisedUser?.user
                     ?
                     <View>
@@ -37,11 +40,11 @@ export const Dashboard = () => {
                             Business apps
                         </Text>
                         <View style={styles.spacer} />
-                        <View style={styles.businessApp}>
+                        <TouchableOpacity style={styles.businessApp} onPress={navigateToCRM}>
                             <Text style={styles.text}>
                                 CRM
                             </Text>
-                        </View>
+                        </TouchableOpacity>
                     </View>
                     :
                     <View>

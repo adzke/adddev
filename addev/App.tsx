@@ -6,15 +6,16 @@ import { getData, getLoginToken, tokenVerifyorRemove, verifyAuthToken } from './
 import { rvAuthorisedUser, rvContacts, rvCurrentCompany, rvCurrentCompanyContacts } from './components/common/common-states';
 import { Dashboard } from './components/dashboard/dashboard';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Header } from './components/header';
+import { Header } from './components/common/header';
+import { CRMHome } from './components/crm/crm-home';
 
 export default function App() {
 
   const authorisedUser = useReactiveVar(rvAuthorisedUser)
   const contacts = useReactiveVar(rvContacts)
   const currentCompany = useReactiveVar(rvCurrentCompany)
-  
-  
+
+
   const Stack = createNativeStackNavigator<ADDevParamList>();
 
   useEffect(() => {
@@ -36,12 +37,12 @@ export default function App() {
 
   return (
     <NavigationContainer >
-
-    <Stack.Navigator initialRouteName='Dashboard' screenOptions={{
-              header: (props) => <Header {...props} />,
-    }}>
-      <Stack.Screen name="Dashboard" component={Dashboard} />
-    </Stack.Navigator>
+      <Stack.Navigator initialRouteName='CRM' screenOptions={{
+        header: (props) => <Header {...props} />,
+      }}>
+        <Stack.Screen name="Dashboard" component={Dashboard} />
+        <Stack.Screen name="CRM" component={CRMHome} />
+      </Stack.Navigator>
     </NavigationContainer>
 
   );

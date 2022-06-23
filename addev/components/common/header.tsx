@@ -1,14 +1,14 @@
 import { useReactiveVar } from "@apollo/client"
 import React from "react"
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native"
-import { rvAuthorisedUser, rvCompanies, rvCurrentCompany, rvShowHeaderPopover } from "./common/common-states"
+import { rvAuthorisedUser, rvCompanies, rvCurrentCompany, rvShowHeaderPopover } from "./common-states"
 import { AntDesign } from '@expo/vector-icons';
-import { logOut } from "./api_functions/api-functions"
+import { logOut } from "../api_functions/api-functions"
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
-import { HeaderPopover } from "./common/header-popover";
+import { HeaderPopover } from "./header-popover";
 
 
-export const Header = ({ navigation: { navigate } }: NativeStackHeaderProps) => {
+export const Header = ({ navigation: { } }: NativeStackHeaderProps) => {
 
     const showHeaderPopover = useReactiveVar(rvShowHeaderPopover)
     const currentCompany = useReactiveVar(rvCurrentCompany)
