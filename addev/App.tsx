@@ -37,7 +37,7 @@ export default function App() {
 
   return (
     <NavigationContainer >
-      <Stack.Navigator initialRouteName='CRM' screenOptions={{
+      <Stack.Navigator initialRouteName='Dashboard' screenOptions={{
         header: (props) => <Header {...props} />,
       }}>
         <Stack.Screen name="Dashboard" component={Dashboard} />

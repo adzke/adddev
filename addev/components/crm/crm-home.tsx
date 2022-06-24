@@ -7,6 +7,10 @@ export const CRMHome = () => {
 
     const currentContacts = useReactiveVar(rvCurrentCompanyContacts)
 
+    let colors = ['#123456', '#654321'];
+
+
+
     return (
         <View style={styles.container}>
             <View style={styles.tableContainer}>
@@ -21,19 +25,22 @@ export const CRMHome = () => {
                         <Text style={styles.textBold}>Company</Text>
                     </View>
                 </View>
-                {currentContacts.map(contact => (
-                    <View style={styles.tableBody}>
+                {currentContacts.map((contact, index) => {
+
+                    return (
+                        <View key={contact.id} style={[styles.tableBody, {backgroundColor: index % 2 == 0 ? 'white' : '#F2F2F2'}]}>
                         <View style={styles.tableID}>
-                            <Text style={styles.text}>{contact.id}</Text>
+                            <Text style={[styles.text,]}>{contact.id}</Text>
                         </View>
                         <View style={styles.tableContactName}>
-                            <Text style={styles.text}>{contact.contact_name}</Text>
+                            <Text style={[styles.text, ]}>{contact.contact_name}</Text>
                         </View>
                         <View style={styles.tableCompanyName}>
-                            <Text style={styles.text}>{contact.company_name}</Text>
+                            <Text style={[styles.text,]}>{contact.company_name}</Text>
                         </View>
                     </View>
-                ))}
+                    )
+                    })}
             </View>
         </View>
     )
@@ -48,13 +55,12 @@ const styles = StyleSheet.create({
     },
     tableContainer: {
         width: 500,
+        height: 500,
         flexDirection: 'column',
         boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-        borderBottomWidth: 3,
-        borderBottomColor: '#FF530D',
         borderTopLeftRadius: 6,
         borderTopRightRadius: 6,
-        },
+    },
     tableHeader: {
         flexDirection: 'row',
         justifyContent: 'center',
@@ -91,6 +97,8 @@ const styles = StyleSheet.create({
     },
     text: {
         color: 'black',
+        fontWeight: '400',
+        fontSize: 12,
     },
     textBold: {
         color: 'white',

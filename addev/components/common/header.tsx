@@ -1,6 +1,6 @@
 import { useReactiveVar } from "@apollo/client"
 import React from "react"
-import { TouchableOpacity, View, Text, StyleSheet } from "react-native"
+import { TouchableOpacity, View, Text, StyleSheet, Image } from "react-native"
 import { rvAuthorisedUser, rvCompanies, rvCurrentCompany, rvShowHeaderPopover } from "./common-states"
 import { AntDesign } from '@expo/vector-icons';
 import { logOut } from "../api_functions/api-functions"
@@ -24,7 +24,10 @@ export const Header = ({ navigation: { } }: NativeStackHeaderProps) => {
 
     return (
         <View style={styles.header}>
-            {showHeaderPopover && <HeaderPopover/> }
+            <View style={styles.logoContainer}>
+                <Image style={styles.logo} source={require('../../assets/images/ADdev-logo.svg')} />
+            </View>
+            {showHeaderPopover && <HeaderPopover />}
             <View style={styles.leftHeader}>
                 {authorisedUser?.user &&
                     <View style={styles.rowHeader}>
@@ -70,7 +73,7 @@ const styles = StyleSheet.create({
     },
     submitLogin: {
         width: 100,
-        height: 25,
+        height: 35,
         backgroundColor: '#FF530D',
         borderRadius: 4,
         justifyContent: 'center',
@@ -107,4 +110,13 @@ const styles = StyleSheet.create({
     icon: {
         paddingLeft: 5,
     },
+    logo: {
+        width: 125,
+        height: 25,
+    },
+    logoContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingLeft: 10,
+    }
 });

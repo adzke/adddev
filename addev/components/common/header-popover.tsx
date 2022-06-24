@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         zIndex: 99,
         position: 'absolute',
         top: 75,
-        left: 5,
+        left: 50,
     },
     text: {
         color: 'white',
