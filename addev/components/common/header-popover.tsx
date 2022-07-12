@@ -42,11 +42,12 @@ const styles = StyleSheet.create({
         zIndex: 99,
         position: 'absolute',
         top: 75,
-        left: 50,
+        right: 35,
     },
     text: {
         color: 'white',
         fontSize: 14,
+        textAlign: 'center',
     },
     company: {
         width: 100,

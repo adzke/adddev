@@ -29,7 +29,11 @@ export const Header = ({ navigation: { } }: NativeStackHeaderProps) => {
             </View>
             {showHeaderPopover && <HeaderPopover />}
             <View style={styles.leftHeader}>
-                {authorisedUser?.user &&
+
+            </View>
+            {authorisedUser?.user &&
+                <View style={styles.row}>
+                    <Text style={styles.text}>{authorisedUser?.user.username}</Text>
                     <View style={styles.rowHeader}>
                         <TouchableOpacity style={styles.company} onPress={() => rvShowHeaderPopover(!showHeaderPopover)}>
                             <Text style={styles.text}>
@@ -38,11 +42,6 @@ export const Header = ({ navigation: { } }: NativeStackHeaderProps) => {
                             <AntDesign name="caretdown" size={15} color="white" style={styles.icon} />
                         </TouchableOpacity>
                     </View>
-                }
-            </View>
-            {authorisedUser?.user &&
-                <View style={styles.row}>
-                    <Text style={styles.text}>{authorisedUser?.user.username}</Text>
                     <TouchableOpacity style={styles.submitLogin} onPress={logoutAPI}>
                         <Text style={styles.text}>
                             Logout
@@ -106,6 +105,7 @@ const styles = StyleSheet.create({
     text: {
         color: 'white',
         fontSize: 14,
+        textAlign: 'center'
     },
     icon: {
         paddingLeft: 5,
