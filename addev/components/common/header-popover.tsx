@@ -21,7 +21,6 @@ export const HeaderPopover = () => {
                             {company.company_name}
                         </Text>
                     </TouchableOpacity>
-
                 ))}
             </ScrollView>
         </View>
