@@ -1,15 +1,12 @@
 import { useReactiveVar } from '@apollo/client'
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
+import { addevBlack, addevOrange, defaultGray, defaultWhite } from '../common/common-colours'
 import { rvCurrentCompanyContacts } from '../common/common-states'
 
 export const CRMHome = () => {
 
     const currentContacts = useReactiveVar(rvCurrentCompanyContacts)
-
-    let colors = ['#123456', '#654321'];
-
-
 
     return (
         <View style={styles.container}>
@@ -28,7 +25,7 @@ export const CRMHome = () => {
                 {currentContacts.map((contact, index) => {
 
                     return (
-                        <View key={contact.id} style={[styles.tableBody, {backgroundColor: index % 2 == 0 ? 'white' : '#F2F2F2'}]}>
+                        <View key={contact.id} style={[styles.tableBody, {backgroundColor: index % 2 == 0 ? defaultWhite : defaultGray}]}>
                         <View style={styles.tableID}>
                             <Text style={[styles.text,]}>{contact.id}</Text>
                         </View>
@@ -49,7 +46,7 @@ export const CRMHome = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: defaultWhite,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -64,7 +61,7 @@ const styles = StyleSheet.create({
     tableHeader: {
         flexDirection: 'row',
         justifyContent: 'center',
-        backgroundColor: '#FF530D',
+        backgroundColor: addevOrange,
         height: 50,
         width: '100%',
         borderTopLeftRadius: 6,
@@ -76,7 +73,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         padding: 20,
-        backgroundColor: 'white',
+        backgroundColor: defaultWhite,
         borderBottomWidth: 0.1,
         borderBottomColor: '#E6E6E6',
 
@@ -96,12 +93,12 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     text: {
-        color: 'black',
+        color: addevBlack,
         fontWeight: '400',
         fontSize: 12,
     },
     textBold: {
-        color: 'white',
+        color: defaultWhite,
         fontWeight: 'bold'
     }
 })

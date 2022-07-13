@@ -7,8 +7,7 @@ import { logOut } from "../api_functions/api-functions"
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 import { HeaderPopover } from "./header-popover";
 
-
-export const Header = ({ navigation: { } }: NativeStackHeaderProps) => {
+export const Header = ({ navigation: { navigate} }: NativeStackHeaderProps) => {
 
     const showHeaderPopover = useReactiveVar(rvShowHeaderPopover)
     const currentCompany = useReactiveVar(rvCurrentCompany)
@@ -21,34 +20,61 @@ export const Header = ({ navigation: { } }: NativeStackHeaderProps) => {
         }
     }
 
+    const navigatehome = () => {
+        navigate('Dashboard')
+    }
+
+    const navigateToApps = () => {
+        navigate('Apps')
+    }
+
+
+
+    
+
 
     return (
-        <View style={styles.header}>
-            <View style={styles.logoContainer}>
-                <Image style={styles.logo} source={require('../../assets/images/ADdev-logo.svg')} />
-            </View>
-            {showHeaderPopover && <HeaderPopover />}
-            <View style={styles.leftHeader}>
+        <View>
+            <View style={styles.header}>
+                <View style={styles.logoContainer}>
+                    <Image style={styles.logo} source={require('../../assets/images/ADdev-logo.svg')} />
+                </View>
+                {showHeaderPopover && <HeaderPopover />}
+                <View style={styles.leftHeader}>
 
-            </View>
-            {authorisedUser?.user &&
-                <View style={styles.row}>
-                    <Text style={styles.text}>{authorisedUser?.user.username}</Text>
-                    <View style={styles.rowHeader}>
-                        <TouchableOpacity style={styles.company} onPress={() => rvShowHeaderPopover(!showHeaderPopover)}>
+                </View>
+                {authorisedUser?.user &&
+                    <View style={styles.row}>
+                        <Text style={styles.text}>Welcome, {authorisedUser?.user.username}</Text>
+                        <View style={styles.rowHeader}>
+                            {/* <AntDesign name="home" size={30} color="#FF530D" /> */}
+                            {/* <TouchableOpacity style={styles.company} onPress={() => rvShowHeaderPopover(!showHeaderPopover)}>
                             <Text style={styles.text}>
                                 {currentCompany?.company_name}
                             </Text>
                             <AntDesign name="caretdown" size={15} color="white" style={styles.icon} />
+                        </TouchableOpacity> */}
+                        </View>
+                        <TouchableOpacity style={styles.submitLogin} onPress={logoutAPI}>
+                            <Text style={styles.text}>
+                                Logout
+                            </Text>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.submitLogin} onPress={logoutAPI}>
-                        <Text style={styles.text}>
-                            Logout
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-            }
+                }
+
+            </View>
+            <View style={styles.belowHeader}>
+                <TouchableOpacity onPress={navigatehome}>
+                    <Text style={styles.secondHeaderText}>Home</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={navigateToApps}>
+                    <Text style={styles.secondHeaderText}>Apps</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.secondHeaderText}>Companies</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
@@ -118,5 +144,18 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingLeft: 10,
-    }
+    },
+    belowHeader: {
+        height: 50,
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        paddingHorizontal: 10,
+    },
+    secondHeaderText: {
+        fontSize: 18,
+        marginHorizontal: 10,
+        fontWeight: '300',
+        }
 });

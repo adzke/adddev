@@ -1,13 +1,13 @@
 import { useReactiveVar } from '@apollo/client';
 import { NavigationContainer } from '@react-navigation/native';
 import React, { useEffect } from 'react';
-import { StyleSheet } from 'react-native';
 import { getData, getLoginToken, tokenVerifyorRemove, verifyAuthToken } from './components/api_functions/api-functions';
 import { rvAuthorisedUser, rvContacts, rvCurrentCompany, rvCurrentCompanyContacts } from './components/common/common-states';
 import { Dashboard } from './components/dashboard/dashboard';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Header } from './components/common/header';
 import { CRMHome } from './components/crm/crm-home';
+import { AppsDashboard } from './components/apps/apps-dashboard';
 
 export default function App() {
 
@@ -42,6 +42,8 @@ export default function App() {
       }}>
         <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen name="CRM" component={CRMHome} />
+        <Stack.Screen name="Apps" component={AppsDashboard} />
+
       </Stack.Navigator>
     </NavigationContainer>
 

@@ -2,11 +2,12 @@ import { useReactiveVar } from "@apollo/client"
 import React, { useState } from "react"
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native"
 import { getAuthToken } from "../api_functions/api-functions"
-import { rvAuthorisedUser} from "../common/common-states"
+import { rvAuthorisedUser } from "../common/common-states"
 import { StackScreenProps } from '@react-navigation/stack'
+import { addevBlack, addevOrange, defaultWhite } from "../common/common-colours"
 
 
-export const Dashboard = ({ navigation: { navigate } }: StackScreenProps<ADDevParamList,'Dashboard'>) => {
+export const Dashboard = ({ navigation: { navigate } }: StackScreenProps<ADDevParamList, 'Dashboard'>) => {
 
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
@@ -39,12 +40,18 @@ export const Dashboard = ({ navigation: { navigate } }: StackScreenProps<ADDevPa
                         <Text style={styles.title}>
                             Business apps
                         </Text>
-                        <View style={styles.spacer} />
-                        <TouchableOpacity style={styles.businessApp} onPress={navigateToCRM}>
-                            <Text style={styles.text}>
-                                CRM
-                            </Text>
-                        </TouchableOpacity>
+                        <View style={styles.businessAppsRow}>
+                            <TouchableOpacity style={styles.businessApp} onPress={navigateToCRM}>
+                                <Text style={styles.text}>
+                                    CRM
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.businessApp} onPress={navigateToCRM}>
+                                <Text style={styles.text}>
+                                    Jobs
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     :
                     <View>
@@ -66,7 +73,7 @@ export const Dashboard = ({ navigation: { navigate } }: StackScreenProps<ADDevPa
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: defaultWhite,
     },
     textInput: {
         height: 30,
@@ -82,7 +89,7 @@ const styles = StyleSheet.create({
     submitLogin: {
         width: 100,
         height: 25,
-        backgroundColor: '#FF530D',
+        backgroundColor: addevOrange,
         borderRadius: 4,
         justifyContent: 'center',
         alignItems: 'center',
@@ -93,7 +100,7 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        backgroundColor: '#363432',
+        backgroundColor: addevBlack,
         height: 75,
     },
     center: {
@@ -119,7 +126,7 @@ const styles = StyleSheet.create({
     companies: {
         width: 200,
         height: 200,
-        backgroundColor: '#FF530D',
+        backgroundColor: addevOrange,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 4,
@@ -136,7 +143,7 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
     },
     popover: {
-        backgroundColor: '#363432',
+        backgroundColor: addevBlack,
         width: 200,
         height: 200,
         zIndex: 99,
@@ -151,18 +158,22 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     title: {
-        color: '#363432',
+        color: addevBlack,
         fontSize: 20,
     },
     businessApp: {
         width: 100,
         height: 100,
-        backgroundColor: '#FF530D',
+        backgroundColor: addevOrange,
         justifyContent: 'center',
         alignItems: 'center',
+        margin: 5,
     },
     spacer: {
         width: '100%',
         height: 25,
+    },
+    businessAppsRow: {
+        flexDirection: 'row',
     }
 });
